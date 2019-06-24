@@ -1,0 +1,12 @@
+This Project matches the time complexity of different string searching algorithms. 
+## Algorithms are:
+KMP Knuth Morris Pratt 
+Robin Karp
+Boyer Moore
+Brute Force
+Finite Automata
+Naive
+Anagram
+
+
+Note: String are searched from the file attached with the project. Displays String is just a sample. 
