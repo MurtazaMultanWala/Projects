@@ -1,0 +1,5 @@
+breakfast AND love
+crowed AND busy 
+Not dog AND cows
+fairr AND clam AND hate 
+Fair OR clam AND hate
