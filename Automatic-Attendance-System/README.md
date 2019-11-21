@@ -1,5 +1,5 @@
-# HCI
-Automatic attendance system using facial recognition
+# Human Computer Interaction
+Automatic Attendance System using facial recognition
 
 ## Dependencies:<br/>
 opencv<br/>
