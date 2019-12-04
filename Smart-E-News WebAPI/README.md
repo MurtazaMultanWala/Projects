@@ -11,3 +11,8 @@ A news reading app which displays time constrained news from a web API. User spe
   <br/>
   
 </p>
+
+<p>
+  Link For Desktop App:  </br>
+  https://github.com/MannanMalik3998/SmartNews
+</p>
