@@ -1,0 +1,10 @@
+C:\Users\Murtaza\Documents\Visual Studio 2013\Projects\WebAPIwithDB\SmartNewsWindows\bin\Debug\SmartNewsWindows.dll.config
+C:\Users\Murtaza\Documents\Visual Studio 2013\Projects\WebAPIwithDB\SmartNewsWindows\bin\Debug\SmartNewsWindows.dll
+C:\Users\Murtaza\Documents\Visual Studio 2013\Projects\WebAPIwithDB\SmartNewsWindows\bin\Debug\SmartNewsWindows.pdb
+C:\Users\Murtaza\Documents\Visual Studio 2013\Projects\WebAPIwithDB\SmartNewsWindows\bin\Debug\EntityFramework.dll
+C:\Users\Murtaza\Documents\Visual Studio 2013\Projects\WebAPIwithDB\SmartNewsWindows\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Murtaza\Documents\Visual Studio 2013\Projects\WebAPIwithDB\SmartNewsWindows\bin\Debug\EntityFramework.xml
+C:\Users\Murtaza\Documents\Visual Studio 2013\Projects\WebAPIwithDB\SmartNewsWindows\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Murtaza\Documents\Visual Studio 2013\Projects\WebAPIwithDB\SmartNewsWindows\obj\Debug\SmartNewsWindows.dll
+C:\Users\Murtaza\Documents\Visual Studio 2013\Projects\WebAPIwithDB\SmartNewsWindows\obj\Debug\SmartNewsWindows.pdb
+C:\Users\Murtaza\Documents\Visual Studio 2013\Projects\WebAPIwithDB\SmartNewsWindows\obj\Debug\SmartNewsWindows.csprojResolveAssemblyReference.cache
