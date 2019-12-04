@@ -1,0 +1,129 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Web.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Web;
+using System.Collections;
+using System.Web.Script.Serialization;
+using Newtonsoft.Json;
+using SmartNewsWindows;
+
+namespace WebAPIwithDB.Controllers
+{
+    public class FetchNewsController : ApiController
+    {
+       
+        public IEnumerable<News> Get()
+        {
+            using (SmartNewsEntities entities = new SmartNewsEntities())
+            {
+                entities.Configuration.ProxyCreationEnabled = false;
+                return entities.News.ToList();
+            }
+        }
+
+
+        public string Get(string category)
+        {
+            using (var context = new SmartNewsEntities())
+            {
+                // Query for all blogs with names starting with B
+                var blogs = from b in context.News
+                            where b.Genre==category
+                            select b;
+
+                return "andr hai";
+            }
+        }
+         /*   using (SmartNewsEntities entities = new SmartNewsEntities())
+            {
+                entities.Configuration.ProxyCreationEnabled = false;
+                var entity = entities.News.Find(category);
+                return entity;
+            }
+        }*/
+
+       /* public JObject Get(string category="Sports")     
+        {
+           var url = "https://newsapi.org/v2/everything?" + 
+                      "q="+category + 
+                      "from=2019-11-24&" + 
+                      "sortBy=popularity&" + 
+                      "apiKey=c2307e9035be4dfb9100f2beede67378";
+           
+           WebClient client = new WebClient();  
+           
+           var fetchNews = client.DownloadString(url);*/
+      
+         /*  var TranslateNewsEngURL =  string.Format(@"https://translate.googleapis.com/translate_a/single?client=gtx&sl={0}&tl={1}&dt=t&q={2}",
+                                   "en","en",Uri.EscapeUriString(fetchNews));
+           HttpClient httpClient = new HttpClient();
+            
+           string result = httpClient.GetStringAsync(TranslateNewsEngURL).Result;
+           
+           var jsonData = new JavaScriptSerializer().Deserialize<List<dynamic>>(result);
+           JsonSerializer jsonSerializer = new JsonSerializer();
+           var json = JsonConvert.SerializeObject(jsonData, Formatting.Indented);
+           var FetchedNewsEng = client.DownloadString(TranslateNewsEngURL);*/
+        /*
+           return JObject.Parse(fetchNews);
+        }*/
+ 
+        public HttpResponseMessage Post( [FromBody] JObject CategoryAndTime)
+        {
+            //return CategoryAndTime["category"];
+            //return CategoryAndTime["freeTime"];
+            try
+            {
+                var url = "https://newsapi.org/v2/everything?" +
+                         "q=" + CategoryAndTime["category"] + "&" +
+                         "from=2019-11-24&" +
+                         "sortBy=popularity&" +
+                         "apiKey=c2307e9035be4dfb9100f2beede67378";
+
+                WebClient client = new WebClient();
+                var fetchNews = client.DownloadString(url);
+
+                JToken parsedJson = JToken.Parse(fetchNews);
+                JArray innerValues = parsedJson["articles"].Value<JArray>();
+
+                dynamic albums = innerValues;
+
+                News newsDB = new News();
+                List<HttpResponseMessage> http = new List<HttpResponseMessage>();
+                using (SmartNewsEntities entities = new SmartNewsEntities())
+                {
+                    foreach (dynamic album in albums)
+                    {
+                        newsDB.NewsTitle = album.title;
+                        newsDB.Source = album.source.name;
+                        newsDB.NewsDescription = album.description;
+                        newsDB.Genre = CategoryAndTime["category"].ToString();
+                        newsDB.PublishedDate = album.publishedAt;
+                        newsDB.ImageInNews = album.url;
+
+                        entities.News.Add(newsDB);
+                        entities.SaveChanges();
+
+                        var freeTime = CategoryAndTime["freeTime"];
+                        var message = Request.CreateResponse(HttpStatusCode.Created, newsDB);
+                        message.Headers.Location = new Uri(Request.RequestUri + newsDB.NewsID.ToString());
+                        http.Add(message);
+                    }
+                }
+
+                return http.ElementAt(0);
+            }
+            catch(Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }         
+        }
+
+       
+    }
+}
