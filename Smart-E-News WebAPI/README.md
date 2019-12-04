@@ -6,6 +6,7 @@ A news reading app which displays time constrained news from a web API. User spe
 <p align="center">
   <img src="1.png" width="350" title="API Home Page">
   <br/>
+  <br/>
   <img src="2.png" width="350" alt="API FetchNews">
   <br/>
   
