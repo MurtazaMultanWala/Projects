@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SmartNewsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="News">
+    <Key>
+      <PropertyRef Name="NewsID" />
+    </Key>
+    <Property Name="NewsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NewsTitle" Type="varchar(max)" Nullable="false" />
+    <Property Name="Source" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="NewsDescription" Type="varchar(max)" Nullable="false" />
+    <Property Name="Genre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PublishedDate" Type="datetime" Nullable="false" />
+    <Property Name="ImageInNews" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="NewsRecommendation">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="NewsID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="NewsID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="EmailAddress" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TimeTakenForReading" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Views">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="NewsID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="NewsID" Type="int" Nullable="false" />
+    <Property Name="ViewingDateTime" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Views_News">
+    <End Role="News" Type="Self.News" Multiplicity="1" />
+    <End Role="Views" Type="Self.Views" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="News">
+        <PropertyRef Name="NewsID" />
+      </Principal>
+      <Dependent Role="Views">
+        <PropertyRef Name="NewsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Views_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Views" Type="Self.Views" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Views">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SmartNewsModelStoreContainer">
+    <EntitySet Name="News" EntityType="Self.News" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NewsRecommendation" EntityType="Self.NewsRecommendation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Views" EntityType="Self.Views" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Views_News" Association="Self.FK_Views_News">
+      <End Role="News" EntitySet="News" />
+      <End Role="Views" EntitySet="Views" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Views_User" Association="Self.FK_Views_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="Views" EntitySet="Views" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

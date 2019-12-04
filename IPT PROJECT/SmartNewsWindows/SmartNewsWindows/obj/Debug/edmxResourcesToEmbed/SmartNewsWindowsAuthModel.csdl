@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SmartNewsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="News">
+    <Key>
+      <PropertyRef Name="NewsID" />
+    </Key>
+    <Property Name="NewsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NewsTitle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Source" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NewsDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Genre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PublishedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="ImageInNews" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Views" Relationship="Self.FK_Views_News" FromRole="News" ToRole="Views" />
+  </EntityType>
+  <EntityType Name="NewsRecommendation">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="NewsID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="NewsID" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="EmailAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TimeTakenForReading" Type="Double" Nullable="false" />
+    <NavigationProperty Name="Views" Relationship="Self.FK_Views_User" FromRole="User" ToRole="Views" />
+  </EntityType>
+  <EntityType Name="View">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="NewsID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="NewsID" Type="Int32" Nullable="false" />
+    <Property Name="ViewingDateTime" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="News" Relationship="Self.FK_Views_News" FromRole="Views" ToRole="News" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Views_User" FromRole="Views" ToRole="User" />
+  </EntityType>
+  <Association Name="FK_Views_News">
+    <End Role="News" Type="Self.News" Multiplicity="1" />
+    <End Role="Views" Type="Self.View" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="News">
+        <PropertyRef Name="NewsID" />
+      </Principal>
+      <Dependent Role="Views">
+        <PropertyRef Name="NewsID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Views_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Views" Type="Self.View" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Views">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SmartNewsEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="News" EntityType="Self.News" />
+    <EntitySet Name="NewsRecommendations" EntityType="Self.NewsRecommendation" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <EntitySet Name="Views" EntityType="Self.View" />
+    <AssociationSet Name="FK_Views_News" Association="Self.FK_Views_News">
+      <End Role="News" EntitySet="News" />
+      <End Role="Views" EntitySet="Views" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Views_User" Association="Self.FK_Views_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Views" EntitySet="Views" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
