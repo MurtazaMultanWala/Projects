@@ -3,6 +3,9 @@ A news reading app which displays time constrained news from a web API. User spe
 
 Connected multiple devices on single localhost using ngrok.
 
+### For APIKEY :
+Please Signup on https://newsapi.org to get apiKey.
+
 For installation: https://ngrok.com
 
 ### Command to generate the IP  
