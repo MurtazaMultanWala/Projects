@@ -48,7 +48,7 @@ namespace WebAPIwithDB.Controllers
                 {
                     foreach (string category in categories)
                     {
-                        #Signup on newsapi.com website to get apiKey.
+                        //Signup on newsapi.com website to get apiKey.
                       
                         var url = "https://newsapi.org/" + endPoint +
                                   "q=" + category + "&" +
