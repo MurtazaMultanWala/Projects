@@ -48,17 +48,13 @@ namespace WebAPIwithDB.Controllers
                 {
                     foreach (string category in categories)
                     {
-                       /* var url = "https://newsapi.org/" + endPoint +
-                                  "q=" + category + "&" +
-                                  "from=2019-11-24&" +
-                                  "sortBy=popularity&" +
-                                  "apiKey=c2307e9035be4dfb9100f2beede67378";*/
-
+                        #Signup on newsapi.com website to get apiKey.
+                      
                         var url = "https://newsapi.org/" + endPoint +
                                   "q=" + category + "&" +
                                   "from=2019-11-24&" +
                                   "sortBy=popularity&" +
-                                  "apiKey=cc42647f4d544c518ec402db610f2833";
+                                  "apiKey=";
                        
                         WebClient client = new WebClient();
                         var fetchNews = client.DownloadString(url);
